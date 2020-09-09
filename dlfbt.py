@@ -8,7 +8,7 @@ class DataGeneratorRegression1D(object):
 
     def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100):
         self.x = xmin + np.random.rand(n, 1)*(xmax - xmin)
-        self.t = self.a*x + self.b + np.random.randn(n, 1)*noise
+        self.t = self.a*self.x + self.b + np.random.randn(n, 1)*noise
         self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)
         self.modely = self.a*self.modelx + self.b
 
