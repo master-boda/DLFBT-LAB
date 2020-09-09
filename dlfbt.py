@@ -58,7 +58,7 @@ class DataGeneratorLinear(object):
 
     def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100):
         self.x = xmin + np.random.rand(n, self.dim)*(xmax - xmin)
-        self.t = np.dot(self.x, self.a) + self.b + np.random.randn(n, self.dim)*noise
+        self.t = np.dot(self.x, self.a) + self.b + np.random.randn(n, 1)*noise
         # Crear un grid, solo si dim == 2:
         #self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)[:, None]
         #self.modely = self.a*self.modelx + self.b
