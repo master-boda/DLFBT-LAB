@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-class DataGeneratorRegression1D(Object):
+class DataGeneratorRegression1D(object):
     def __init__(self, a=2.0, b=1.0):
         self.a = a
         self.b = b
