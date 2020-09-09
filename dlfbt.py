@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-class DataGeneratorRegression1D(object):
+def sigmoid(z):
+        return 1.0/(1.0+np.exp(-z))
+
+class DataGeneratorLinear1D(object):
     def __init__(self, a=2.0, b=1.0):
         self.a = a
         self.b = b
@@ -11,6 +14,28 @@ class DataGeneratorRegression1D(object):
         self.t = self.a*self.x + self.b + np.random.randn(n, 1)*noise
         self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)
         self.modely = self.a*self.modelx + self.b
+
+    def plot_dataset(self, include_generator=True, estimation=None):
+        plt.figure(figsize=(6, 6))
+        plt.plot(self.x, self.t, 'o', label='data points')
+        if include_generator:
+            plt.plot(self.modelx, self.modely, 'r-', label='true model')
+        if estimation is not None:
+            plt.plot(estimation[0], estimation[1], 'm-', label='estimation')
+        plt.grid(True)
+        plt.xlabel("x")
+        plt.ylabel("t")
+        plt.legend()
+        plt.show()
+
+class DataGeneratorLogistic1D(DataGeneratorLinear1D):
+    def __init__(self, a=2.0, b=-10.0):
+        DataGeneratorLinear1D.__init__(self, a, b)
+
+    def create_dataset(self, xmin=0.0, xmax=10.0, n=1000):
+        DataGeneratorLinear1D.create_dataset(self, xmin, xmax, 0.0, n)
+        self.t = sigmoid(self.t)
+        self.modely = sigmoid(self.modely)
 
     def plot_dataset(self, include_generator=True, estimation=None):
         plt.figure(figsize=(6, 6))
