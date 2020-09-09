@@ -34,7 +34,7 @@ class DataGeneratorLogistic1D(DataGeneratorLinear1D):
 
     def create_dataset(self, xmin=0.0, xmax=10.0, n=1000):
         DataGeneratorLinear1D.create_dataset(self, xmin, xmax, 0.0, n)
-        self.t = sigmoid(self.t)
+        self.t = sigmoid(self.t) > np.random.rand(n, 1)
         self.modely = sigmoid(self.modely)
 
     def plot_dataset(self, include_generator=True, estimation=None):
