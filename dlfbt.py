@@ -12,14 +12,17 @@ class DataGeneratorRegression1D(object):
         self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)
         self.modely = self.a*self.modelx + self.b
 
-    def plot_dataset(self, include_model=True):
+    def plot_dataset(self, include_generator=True, estimation=None):
         plt.figure(figsize=(6, 6))
-        plt.plot(self.x, self.t, 'o')
-        if include_model:
-            plt.plot(self.modelx, self.modely, 'r-')
+        plt.plot(self.x, self.t, 'o', label='data poits')
+        if include_generator:
+            plt.plot(self.modelx, self.modely, 'r-', label='true model')
+        if estimation is not None:
+            plt.plot(estimation[0], estimation[1], 'm-', label='estimation')
         plt.grid(True)
         plt.xlabel("x")
         plt.ylabel("t")
+        plt.legend()
         plt.show()
 
     
