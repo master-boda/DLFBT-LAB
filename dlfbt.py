@@ -14,7 +14,7 @@ class DataGeneratorRegression1D(object):
 
     def plot_dataset(self, include_generator=True, estimation=None):
         plt.figure(figsize=(6, 6))
-        plt.plot(self.x, self.t, 'o', label='data poits')
+        plt.plot(self.x, self.t, 'o', label='data points')
         if include_generator:
             plt.plot(self.modelx, self.modely, 'r-', label='true model')
         if estimation is not None:
