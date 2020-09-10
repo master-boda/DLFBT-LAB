@@ -11,7 +11,9 @@ class DataGeneratorLinear1D(object):
         self.a = a
         self.b = b
 
-    def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100):
+    def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
         self.x = xmin + np.random.rand(n, 1)*(xmax - xmin)
         self.t = self.a*self.x + self.b + np.random.randn(n, 1)*noise
         self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)[:, None]
@@ -35,8 +37,8 @@ class DataGeneratorLogistic1D(DataGeneratorLinear1D):
     def __init__(self, a=2.0, b=-10.0):
         DataGeneratorLinear1D.__init__(self, a, b)
 
-    def create_dataset(self, xmin=0.0, xmax=10.0, n=1000):
-        DataGeneratorLinear1D.create_dataset(self, xmin, xmax, 0.0, n)
+    def create_dataset(self, xmin=0.0, xmax=10.0, n=1000, seed=None):
+        DataGeneratorLinear1D.create_dataset(self, xmin, xmax, 0.0, n, seed)
         self.t = sigmoid(self.t) > np.random.rand(n, 1)
         self.modely = sigmoid(self.modely)
 
