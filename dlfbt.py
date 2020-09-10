@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#-----------------------------------------------------------------------------------
 def sigmoid(z):
         return 1.0/(1.0+np.exp(-z))
 
+#-----------------------------------------------------------------------------------
 class DataGeneratorLinear1D(object):
     def __init__(self, a=2.0, b=1.0):
         self.a = a
@@ -28,6 +30,7 @@ class DataGeneratorLinear1D(object):
         plt.legend()
         plt.show()
 
+#-----------------------------------------------------------------------------------
 class DataGeneratorLogistic1D(DataGeneratorLinear1D):
     def __init__(self, a=2.0, b=-10.0):
         DataGeneratorLinear1D.__init__(self, a, b)
@@ -50,13 +53,16 @@ class DataGeneratorLogistic1D(DataGeneratorLinear1D):
         plt.legend()
         plt.show()
 
+#-----------------------------------------------------------------------------------
 class DataGeneratorLinear(object):
     def __init__(self, a=[2.0], b=1.0):
         self.dim = len(a)
         self.a = np.array(a)[:, None]
         self.b = np.array([[b]])
 
-    def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100):
+    def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
         self.x = xmin + np.random.rand(n, self.dim)*(xmax - xmin)
         self.t = np.dot(self.x, self.a) + self.b + np.random.randn(n, 1)*noise
         # Crear un grid, solo si dim == 2:
