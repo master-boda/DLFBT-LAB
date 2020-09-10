@@ -62,6 +62,6 @@ class DataGeneratorLogistic(DataGeneratorLinear):
     def __init__(self, a=[2.0], b=-10.0):
         DataGeneratorLinear.__init__(self, a, b)
 
-    def create_dataset(self, xmin=0.0, xmax=10.0, n=100, seed=None):
+    def create_dataset(self, xmin=0.0, xmax=10.0, n=1000, seed=None):
         DataGeneratorLinear.create_dataset(self, xmin, xmax, 0.0, n, seed)
         self.t = sigmoid(self.t) > np.random.rand(n, 1)
