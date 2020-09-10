@@ -60,7 +60,7 @@ class DataGeneratorLinear(object):
 #-----------------------------------------------------------------------------------
 class DataGeneratorLogistic(DataGeneratorLinear):
     def __init__(self, a=[2.0], b=-10.0):
-        DataGneratorLinear.__init__(self, a, b)
+        DataGeneratorLinear.__init__(self, a, b)
 
     def create_dataset(self, xmin=0.0, xmax=10.0, noise=2.0, n=100, seed=None):
         DataGeneratorLinear.create_dataset(self, xmin, xmax, noise, n, seed)
