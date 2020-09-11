@@ -16,7 +16,8 @@ class DataGeneratorLinear1D(object):
             np.random.seed(seed)
         self.x = xmin + np.random.rand(n, 1)*(xmax - xmin)
         self.t = self.a*self.x + self.b + np.random.randn(n, 1)*noise
-        self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)[:, None]
+        inc = (xmax-xmin)/100.0
+        self.modelx = np.arange(xmin, xmax+inc, inc)[:, None]
         self.modely = self.a*self.modelx + self.b
 
     def plot_dataset(self, include_generator=True, estimation=None):
@@ -54,7 +55,8 @@ class DataGeneratorLinear(object):
             np.random.seed(seed)
         self.x = xmin + np.random.rand(n, self.dim)*(xmax - xmin)
         self.t = np.dot(self.x, self.a) + self.b + np.random.randn(n, 1)*noise
-        self.modelx = np.arange(xmin, xmax, (xmax-xmin)/100.0)[:, None]
+        inc = (xmax-xmin)/100.0
+        self.modelx = np.arange(xmin, xmax+inc, inc)[:, None]
         #self.modely = self.a*self.modelx + self.b
 
 #-----------------------------------------------------------------------------------
