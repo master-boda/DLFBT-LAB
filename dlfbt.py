@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 #-----------------------------------------------------------------------------------
 def sigmoid(z):
         return 1.0/(1.0+np.exp(-z))
@@ -58,7 +57,6 @@ class DataGeneratorLinear(object):
         self.t = np.dot(self.x, self.a) + self.b + np.random.randn(n, 1)*noise
         inc = (xmax-xmin)/100.0
         self.modelx = np.arange(xmin, xmax+inc, inc)[:, None]
-        #self.modely = self.a*self.modelx + self.b
 
 #-----------------------------------------------------------------------------------
 class DataGeneratorLogistic(DataGeneratorLinear):
