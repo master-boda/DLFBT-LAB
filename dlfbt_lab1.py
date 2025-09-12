@@ -594,7 +594,7 @@ class NeuralNetwork(object):
         # --- TO-DO block: loop in the network layers computing the gradients with
         # --- respect to W and b. Note that the gradients must be computed starting
         # --- by the last layer, it may be useful to traverse the lists backwards.
-	pass
+        pass
         # --- End of TO-DO block
         
         return dW, db
