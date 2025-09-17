@@ -50,7 +50,10 @@ class LinearRegressionModel(object):
         """
 
         # --- TO-DO block: Compute the model output y
-        pass
+        # multiplication of observations by weights plus bias
+        # 3.4.1. Defining the Model¶
+        # https://d2l.ai/chapter_linear-regression/linear-regression-scratch.html
+        y = np.dot(x, self.w) + self.b
         # --- End of TO-DO block 
         
         return y
@@ -78,9 +81,16 @@ class LinearRegressionModel(object):
         y = self.predict(x)
 
         # --- TO-DO block: Compute the gradients db and dw
-        pass
-        # --- End of TO-DO block 
-        
+
+        # 3.4.2. Defining the Loss Function
+        # https://d2l.ai/chapter_linear-regression/linear-regression-scratch.html
+        # number of samples in the batch
+        N = x.shape[0]
+        y_minus_t = y - t
+        db = np.sum(y_minus_t, axis=0, keepdims=True) / N
+        dw = np.dot(x.T, y_minus_t) / N
+        # --- End of TO-DO block
+
         return db, dw
         
     def gradient_step(self, x, t, eta):
@@ -100,6 +110,9 @@ class LinearRegressionModel(object):
         db, dw = self.compute_gradients(x, t)
         
         # --- TO-DO block: Update the model parameters b and w
+        # linear_regression.ipynb (luisferuam GitHub repository)
+        self.b -= eta * db
+        self.w -= eta * dw
         pass
         # --- End of TO-DO block 
         
@@ -189,9 +202,32 @@ class LogisticRegressionModel(LinearRegressionModel):
         return 1.0/(1.0+np.exp(-z))
 
     # --- TO-DO block: Overwrite the methods of the LinearRegressionModel class
-    pass
-    # --- End of TO-DO block 
+    def predict(self, x):
+        
+        linear_output = np.dot(x, self.w) + self.b
+        y = LogisticRegressionModel.sigmoid(linear_output)
+
+        return y
     
+    # these 2 functions below are the same as in the linear regression because the derivative of the
+    # cross-entropy loss with sigmoid output simplifies to y - t (as in linear regression with MSE loss)
+    # "Note that the above expressions are exactly the same as those obtained for the linear regression case"
+    # logisitic_regression.ipynb (luisferuam GitHub repository)
+    def compute_gradients(self, x, t):
+        y = self.predict(x)
+        N = x.shape[0]
+        y_minus_t = y - t
+        db = np.sum(y_minus_t, axis=0, keepdims=True) / N
+        dw = np.dot(x.T, y_minus_t) / N
+        return db, dw
+    
+    def gradient_step(self, x, t, eta):
+        db, dw = self.compute_gradients(x, t)
+        self.b -= eta * db
+        self.w -= eta * dw
+        pass
+    # --- End of TO-DO block 
+
     def get_loss(self, x, t):
         """
         Calculates the cross-entropy loss for an input batch (x, t)
@@ -241,7 +277,10 @@ class BasicTF:
 
         # --- TO-DO block: Define the computational graph within a gradient tape and
         # --- compute the gradient
-        pass
+        with tf.GradientTape() as tape:
+            y = f(x)
+
+        dy_dx = tape.gradient(y, x)
         # --- End of TO-DO block
 
         return dy_dx  
@@ -273,7 +312,7 @@ class BasicTF:
         for i in range(niters):
             # --- TO-DO block: Define the computational graph within a gradient tape and 
             # --- compute the gradient
-            pass
+            
             # --- End of TO-DO block 
             
             # --- TO-DO block: Update the value of x using the tf.Variable assign method
