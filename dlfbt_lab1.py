@@ -113,7 +113,6 @@ class LinearRegressionModel(object):
         # linear_regression.ipynb (luisferuam GitHub repository)
         self.b -= eta * db
         self.w -= eta * dw
-        pass
         # --- End of TO-DO block 
         
     def fit(self, x, t, eta, num_iters):
@@ -225,7 +224,6 @@ class LogisticRegressionModel(LinearRegressionModel):
         db, dw = self.compute_gradients(x, t)
         self.b -= eta * db
         self.w -= eta * dw
-        pass
     # --- End of TO-DO block 
 
     def get_loss(self, x, t):
