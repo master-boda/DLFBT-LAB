@@ -276,11 +276,14 @@ class BasicTF:
         x = tf.Variable(x)
 
         # --- TO-DO block: Define the computational graph within a gradient tape and
+
         # --- compute the gradient
         with tf.GradientTape() as tape:
             y = f(x)
 
         dy_dx = tape.gradient(y, x)
+        dy_dx = dy_dx.numpy() # convert to numpy array
+
         # --- End of TO-DO block
 
         return dy_dx  
@@ -312,11 +315,19 @@ class BasicTF:
         for i in range(niters):
             # --- TO-DO block: Define the computational graph within a gradient tape and 
             # --- compute the gradient
-            
+
+            with tf.GradientTape() as tape:
+                y = f(x)
+
+            dy_dx = tape.gradient(y, x)
+
             # --- End of TO-DO block 
             
             # --- TO-DO block: Update the value of x using the tf.Variable assign method
-            pass
+
+            # https://www.tensorflow.org/api_docs/python/tf/Variable?hl=en#assign_sub
+            x.assign_sub(eta * dy_dx)
+
             # --- End of TO-DO block 
 
             x_history.append(x.numpy())
@@ -364,7 +375,9 @@ class LinearRegressionModel_TF(object):
         
         """
         # --- TO-DO block: Compute the model output y
-        pass
+
+        # https://www.tensorflow.org/api_docs/python/tf/linalg/matmul  
+        y = tf.matmul(x, self.w) + self.b
         # --- End of TO-DO block 
 
         return y
@@ -389,10 +402,15 @@ class LinearRegressionModel_TF(object):
         dw : tensor
              Gradient of the loss with respect to the weights, shape (d, 1)
         """
-        # --- TO-DO block: Compute the gradients db and dw of the loss function 
-        pass
-        # --- End of TO-DO block 
+        y = self.predict(x)
         
+        # https://www.tensorflow.org/api_docs/python/tf/cast
+        # create a tensor with batch size, and makes it float64 for further calculations
+        N = tf.cast(tf.shape(x)[0], tf.float64)
+
+        y_minus_t = y - t
+        db = tf.reduce_sum(y_minus_t, axis=0) / N  # shape (1, 1)
+        dw = tf.matmul(tf.transpose(x), y_minus_t) / N  # shape (d, 1)
         return db, dw
         
     def gradient_step(self, x, t, eta):
@@ -412,6 +430,8 @@ class LinearRegressionModel_TF(object):
         db, dw = self.compute_gradients(x, t)
         
         # --- TO-DO block: Update the model parameters b and w
+        self.b.assign_sub(eta * db)
+        self.w.assign_sub(eta * dw)
         pass
         # --- End of TO-DO block 
 
